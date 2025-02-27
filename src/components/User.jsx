@@ -5,7 +5,7 @@ export default function User() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch("http://dashboard-backend-sepia.vercel.app/user/view")
+    fetch("https://dashboard-backend-sepia.vercel.app/user/view")
       .then(res => res.json())
       .then(json => setData(json));
   }, []);
