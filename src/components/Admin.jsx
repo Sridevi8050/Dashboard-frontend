@@ -7,7 +7,7 @@ export default function Admin() {
 
   // Function to fetch data from backend
   const fetchData = async () => {
-    const res = await fetch("http://localhost:5000/admin/read");
+    const res = await fetch("http://dashboard-backend-sepia.vercel.app/admin/read");
     const json = await res.json();
     setData(json);
   };
@@ -18,7 +18,7 @@ export default function Admin() {
 
   // Function to create data
   const createData = async () => {
-    await fetch("http://localhost:5000/admin/create", {
+    await fetch("http://dashboard-backend-sepia.vercel.app/admin/create", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ title, description }),
@@ -36,7 +36,7 @@ export default function Admin() {
 
     if (!updatedTitle || !updatedDescription) return;
 
-    await fetch(`http://localhost:5000/admin/update/${id}`, {
+    await fetch(`http://dashboard-backend-sepia.vercel.app/admin/update/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ title: updatedTitle, description: updatedDescription }),
@@ -47,7 +47,7 @@ export default function Admin() {
 
   // Function to delete data
   const deleteData = async (id) => {
-    await fetch(`http://localhost:5000/admin/delete/${id}`, {
+    await fetch(`http://dashboard-backend-sepia.vercel.app/admin/delete/${id}`, {
       method: "DELETE",
     });
 

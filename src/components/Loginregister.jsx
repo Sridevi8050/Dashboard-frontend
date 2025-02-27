@@ -19,7 +19,7 @@ export default function Loginregister() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const endpoint = isLogin ? "http://localhost:5000/login" : "http://localhost:5000/register";
+    const endpoint = isLogin ? "http://dashboard-backend-sepia.vercel.app/login" : "http://dashboard-backend-sepia.vercel.app/register";
 
     // Payload structure
     const payload = isLogin
