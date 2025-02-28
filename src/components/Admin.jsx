@@ -22,7 +22,7 @@ export default function Admin() {
     }
     return {
       "Content-Type": "application/json",
-      "Authorization": token,
+      "Authorization": `Bearer ${token}`,
     };
   };
 
