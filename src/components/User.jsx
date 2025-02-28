@@ -5,7 +5,7 @@ export default function User() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch("https://dashboard-backend-q56i.onrender.com/user/data/view")
+    fetch("https://dashboard-backend-q56i.onrender.com/user/view")
       .then(res => res.json())
       .then(json => setData(json));
   }, []);
