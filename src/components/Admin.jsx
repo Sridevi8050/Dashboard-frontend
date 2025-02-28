@@ -5,9 +5,20 @@ export default function Admin() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
+  // Helper to get headers with token
+  const getAuthHeaders = () => {
+    const token = localStorage.getItem("token");
+    return {
+      "Content-Type": "application/json",
+      "Authorization": token,
+    };
+  };
+
   // Function to fetch data from backend
   const fetchData = async () => {
-    const res = await fetch("https://dashboard-backend-q56i.onrender.com/admin/data");
+    const res = await fetch("https://dashboard-backend-q56i.onrender.com/admin/data", {
+      headers: getAuthHeaders(),
+    });
     const json = await res.json();
     setData(json);
   };
@@ -20,7 +31,7 @@ export default function Admin() {
   const createData = async () => {
     await fetch("https://dashboard-backend-q56i.onrender.com/admin/data", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: getAuthHeaders(),
       body: JSON.stringify({ title, description }),
     });
 
@@ -38,7 +49,7 @@ export default function Admin() {
 
     await fetch(`https://dashboard-backend-q56i.onrender.com/admin/data/${id}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: getAuthHeaders(),
       body: JSON.stringify({ title: updatedTitle, description: updatedDescription }),
     });
 
@@ -49,6 +60,7 @@ export default function Admin() {
   const deleteData = async (id) => {
     await fetch(`https://dashboard-backend-q56i.onrender.com/admin/data/${id}`, {
       method: "DELETE",
+      headers: getAuthHeaders(),
     });
 
     fetchData(); // Refresh data after delete
@@ -84,7 +96,9 @@ export default function Admin() {
             key={item.id}
             className="border border-gray-300 rounded-lg p-4 bg-white shadow-sm flex justify-between items-center"
           >
-            <span>{item.title} - {item.description}</span>
+            <span>
+              {item.title} - {item.description}
+            </span>
             <div className="space-x-2">
               <button
                 className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded"
