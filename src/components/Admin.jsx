@@ -16,7 +16,7 @@ export default function Admin() {
 
   // Function to fetch data from backend
   const fetchData = async () => {
-    const res = await fetch("https://dashboard-backend-q56i.onrender.com/admin/data", {
+    const res = await fetch("https://dashboard-backend-q56i.onrender.com/admin/read", {
       headers: getAuthHeaders(),
     });
     const json = await res.json();
@@ -29,7 +29,7 @@ export default function Admin() {
 
   // Function to create data
   const createData = async () => {
-    await fetch("https://dashboard-backend-q56i.onrender.com/admin/data", {
+    await fetch("https://dashboard-backend-q56i.onrender.com/admin/create", {
       method: "POST",
       headers: getAuthHeaders(),
       body: JSON.stringify({ title, description }),
@@ -47,7 +47,7 @@ export default function Admin() {
 
     if (!updatedTitle || !updatedDescription) return;
 
-    await fetch(`https://dashboard-backend-q56i.onrender.com/admin/data/${id}`, {
+    await fetch(`https://dashboard-backend-q56i.onrender.com/admin/update/${id}`, {
       method: "PUT",
       headers: getAuthHeaders(),
       body: JSON.stringify({ title: updatedTitle, description: updatedDescription }),
@@ -58,7 +58,7 @@ export default function Admin() {
 
   // Function to delete data
   const deleteData = async (id) => {
-    await fetch(`https://dashboard-backend-q56i.onrender.com/admin/data/${id}`, {
+    await fetch(`https://dashboard-backend-q56i.onrender.com/admin/delete/${id}`, {
       method: "DELETE",
       headers: getAuthHeaders(),
     });
