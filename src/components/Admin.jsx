@@ -7,7 +7,7 @@ export default function Admin() {
 
   // Function to fetch data from backend
   const fetchData = async () => {
-    const res = await fetch("https://dashboard-backend-sepia.vercel.app/admin/read");
+    const res = await fetch("https://dashboard-backend-q56i.onrender.com/admin/read");
     const json = await res.json();
     setData(json);
   };
@@ -18,7 +18,7 @@ export default function Admin() {
 
   // Function to create data
   const createData = async () => {
-    await fetch("https://dashboard-backend-sepia.vercel.app/admin/create", {
+    await fetch("https://dashboard-backend-q56i.onrender.com/admin/create", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ title, description }),
@@ -36,7 +36,7 @@ export default function Admin() {
 
     if (!updatedTitle || !updatedDescription) return;
 
-    await fetch(`https://dashboard-backend-sepia.vercel.app/admin/update/${id}`, {
+    await fetch(`https://dashboard-backend-q56i.onrender.com/admin/update/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ title: updatedTitle, description: updatedDescription }),
@@ -47,7 +47,7 @@ export default function Admin() {
 
   // Function to delete data
   const deleteData = async (id) => {
-    await fetch(`https://dashboard-backend-sepia.vercel.app/admin/delete/${id}`, {
+    await fetch(`https://dashboard-backend-q56i.onrender.com/admin/delete/${id}`, {
       method: "DELETE",
     });
 
