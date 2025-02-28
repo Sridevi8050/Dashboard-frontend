@@ -9,6 +9,8 @@ export default function Loginregister() {
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
@@ -18,6 +20,9 @@ export default function Loginregister() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError("");
+    
     const endpoint = isLogin
       ? "https://dashboard-backend-q56i.onrender.com/login"
       : "https://dashboard-backend-q56i.onrender.com/register";
@@ -41,7 +46,8 @@ export default function Loginregister() {
       const data = await response.json();
 
       if (!response.ok) {
-        alert(data.error || "Error: Please check your input fields!");
+        setError(data.error || "Error: Please check your input fields!");
+        setLoading(false);
         return;
       }
 
@@ -49,7 +55,16 @@ export default function Loginregister() {
 
       if (isLogin) {
         // Store the token in localStorage
-        localStorage.setItem("token", data.token);
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+          console.log("Token stored:", data.token);
+        } else {
+          console.error("No token received");
+          setError("Authentication error: No token received");
+          setLoading(false);
+          return;
+        }
+        
         // Navigate based on user role
         if (data.user?.role === "admin") {
           navigate("/admin");
@@ -59,10 +74,17 @@ export default function Loginregister() {
       } else {
         alert("Registration successful! Please log in.");
         setIsLogin(true);
+        setFormData({
+          username: "",
+          email: "",
+          password: "",
+        });
       }
     } catch (error) {
       console.error("❌ Error:", error);
-      alert("Server Error!");
+      setError("Server Error! Please try again later.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -78,6 +100,13 @@ export default function Loginregister() {
             ? "User Login"
             : "User Register"}
         </h2>
+        
+        {error && (
+          <div className="mb-4 p-2 bg-red-100 border border-red-400 text-red-700 rounded">
+            {error}
+          </div>
+        )}
+        
         <form onSubmit={handleSubmit}>
           {!isLogin && (
             <div className="mb-4">
@@ -116,9 +145,10 @@ export default function Loginregister() {
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600"
+            className={`w-full ${loading ? 'bg-gray-400' : 'bg-blue-500 hover:bg-blue-600'} text-white p-2 rounded-lg`}
+            disabled={loading}
           >
-            {isLogin ? "Login" : "Register"}
+            {loading ? "Processing..." : isLogin ? "Login" : "Register"}
           </button>
         </form>
         <p className="text-center mt-4 text-sm">
